@@ -31,7 +31,7 @@ CREATE TABLE book
 (
   id INTEGER NOT NULL PRIMARY KEY,
   title TEXT NOT NULL,
-  published DATE NOT NULL,
+  year_published SMALLINT NOT NULL,
   rating NUMERIC(3, 2) NOT NULL,
   pages SMALLINT NOT NULL,
   genre_id INTEGER REFERENCES genre(id),

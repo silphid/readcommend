@@ -59,8 +59,7 @@ paths:
           in: query
           required: false
           description: |
-            Inclusive minimum publishing year. In other words, all books published
-            before given year are excluded.
+            Inclusive minimum publishing year.
           schema:
             type: integer
             minimum: 1800
@@ -69,8 +68,7 @@ paths:
           in: query
           required: false
           description: |
-            Exclusive maximum publishing year. In other words, all books published
-            during or after given year are excluded.
+            Inclusive maximum publishing year.
           schema:
             type: integer
             minimum: 1800
@@ -90,8 +88,26 @@ paths:
             schema:
               type: object
             example:
+              - id: 1
+                title: Alanna Saves the Day
+                yearPublished: 1972
+                rating: 1.62
+                pages: 169
+                genreID: 8
+                genreTitle: Childrens
+                authorID: 6
+                authorName: Bernard Hopf
+              - id: 2
+                title: Adventures of Kaya
+                yearPublished: 1999
+                rating: 2.13
+                pages: 619
+                genreID: 1
+                genreTitle: Young Adult
+                authorID: 40
+                authorName: Ward Haigh
         400:
-          description: invalid query parameters
+          description: Invalid query parameters
           application/json:
             schema:
               type: object
@@ -110,11 +126,15 @@ paths:
             schema:
               type: object
             example:
-              [
-                { id: 1, firstName: "Abraham", lastName: "Stackhouse" },
-                { id: 2, firstName: "Amelia", lastName: "Wangerin, Jr." },
-                { id: 3, firstName: "Anastasia", lastName: "Inez" },
-              ]
+              - id: 1
+                firstName: Abraham
+                lastName: Stackhouse
+              - id: 2
+                firstName: Amelia
+                lastName: Wangerin, Jr.
+              - id: 3
+                firstName: Anastasia
+                lastName: Inez
   /genres:
     get:
       summary: Gets all genres
@@ -128,11 +148,12 @@ paths:
             schema:
               type: object
             example:
-              [
-                { id: 1, title: "Young Adult" },
-                { id: 2, title: "SciFi/Fantasy" },
-                { id: 3, title: "Romance" },
-              ]
+              - id: 1
+                title: Young Adult
+              - id: 2
+                title: SciFi/Fantasy
+              - id: 3
+                title: Romance
   /sizes:
     get:
       summary: Gets all book size ranges
@@ -148,24 +169,23 @@ paths:
             schema:
               type: object
             example:
-              [
-                { id: 1, title: "Short story – up to 35 pages", maxPages: 34 },
-                {
-                  id: 2,
-                  title: "Novelette – 35 to 85 pages",
-                  minPages: 35,
-                  maxPages: 84,
-                },
-                { id: 6, title: "Monument – 800 pages and up", minPages: 800 },
-              ]
+              - id: 1
+                title: Short story – up to 35 pages
+                maxPages: 34
+              - id: 2
+                title: Novelette – 35 to 85 pages
+                minPages: 35
+                maxPages: 84
+              - id: 6
+                title: Monument – 800 pages and up
+                minPages: 800
   /eras:
     get:
       summary: Gets all eras
       description: |
-        Gets list of all eras (ranges of publishing dates). Minimum
-        year is inclusive and maximum year is exclusive. Either the
-        minimum or maximum can be omitted for an unbounded range in
-        either direction.
+        Gets list of all eras (ranges of publishing years). Minimum
+        and maximum years are both inclusive and either of them
+        may be omitted for an unbounded range in either direction.
       operationId: GetEras
       responses:
         200:
@@ -177,7 +197,9 @@ paths:
             schema:
               type: object
             example:
-              [
-                { id: 1, title: "Classic", maxYear: 1970 },
-                { id: 2, title: "Modern", minYear: 1970 },
-              ]
+              - id: 1
+                title: Classic
+                maxYear: 1969
+              - id: 2
+                title: Modern
+                minYear: 1970
