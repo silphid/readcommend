@@ -2,8 +2,8 @@ CREATE TABLE era
 (
   id INTEGER NOT NULL PRIMARY KEY,
   title TEXT NOT NULL,
-  min_published DATE,
-  max_published DATE
+  min_year SMALLINT,
+  max_year SMALLINT,
 );
 
 CREATE TABLE size

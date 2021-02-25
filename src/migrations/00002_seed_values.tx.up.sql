@@ -1,15 +1,15 @@
-INSERT INTO era (id, title, min_published, max_published)
+INSERT INTO era (id, title, min_year, max_year)
 VALUES
-  (1, 'Classic', NULL, '1/1/1970'),
-  (2, 'Modern', '1/1/1970', NULL);
+  (1, 'Classic', NULL, 1970),
+  (2, 'Modern', 1970, NULL);
 
 INSERT INTO size (id, title, min_pages, max_pages)
 VALUES
-  (1, 'Short story – up to 35 pages', NULL, 35),
-  (2, 'Novelette – 35 to 85 pages', 35, 85),
-  (3, 'Novella – 85 to 200 pages', 85, 200),
-  (4, 'Novel – 200 to 500 pages', 200, 500),
-  (5, 'Saga – 500 to 800 pages', 500, 800),
+  (1, 'Short story – up to 35 pages', NULL, 34),
+  (2, 'Novelette – 35 to 85 pages', 35, 84),
+  (3, 'Novella – 85 to 200 pages', 85, 199),
+  (4, 'Novel – 200 to 500 pages', 200, 499),
+  (5, 'Brick – 500 to 800 pages', 500, 799),
   (6, 'Monument – 800 pages and up', 800, NULL);
 
 INSERT INTO genre (id, title)
