@@ -1,36 +1,36 @@
 CREATE TABLE era
 (
   id INTEGER NOT NULL PRIMARY KEY,
-  title TEXT varying NOT NULL,
+  title TEXT NOT NULL,
   min_published DATE,
-  max_published DATE,
+  max_published DATE
 );
 
 CREATE TABLE size
 (
   id INTEGER NOT NULL PRIMARY KEY,
-  title TEXT varying NOT NULL,
+  title TEXT NOT NULL,
   min_pages SMALLINT,
-  max_pages SMALLINT,
+  max_pages SMALLINT
 );
 
 CREATE TABLE genre
 (
   id INTEGER NOT NULL PRIMARY KEY,
-  title TEXT varying NOT NULL,
+  title TEXT NOT NULL
 ); 
 
 CREATE TABLE author
 (
   id INTEGER NOT NULL PRIMARY KEY,
-  first_name TEXT varying NOT NULL,
-  last_name TEXT varying NOT NULL,
+  first_name TEXT NOT NULL,
+  last_name TEXT NOT NULL
 );
 
 CREATE TABLE book
 (
   id INTEGER NOT NULL PRIMARY KEY,
-  title TEXT varying NOT NULL,
+  title TEXT NOT NULL,
   published DATE NOT NULL,
   rating NUMERIC(3, 2) NOT NULL,
   pages SMALLINT NOT NULL,
