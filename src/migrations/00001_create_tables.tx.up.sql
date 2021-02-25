@@ -3,7 +3,7 @@ CREATE TABLE era
   id INTEGER NOT NULL PRIMARY KEY,
   title TEXT NOT NULL,
   min_year SMALLINT,
-  max_year SMALLINT,
+  max_year SMALLINT
 );
 
 CREATE TABLE size
@@ -38,7 +38,7 @@ CREATE TABLE book
   author_id INTEGER REFERENCES author(id)
 );
 
-CREATE INDEX book_published ON book USING btree (published);
+CREATE INDEX book_published ON book USING btree (year_published);
 CREATE INDEX book_rating ON book USING btree (rating);
 CREATE INDEX book_pages ON book USING btree (pages);
 CREATE INDEX book_genre_id ON book USING btree (genre_id);
