@@ -6,32 +6,38 @@ import (
 	"testing"
 
 	"github.com/silphid/readcommend/src/server/internal/db"
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
+	_require "github.com/stretchr/testify/assert"
+	_assert "github.com/stretchr/testify/require"
 )
 
 func TestGetAll(t *testing.T) {
+	// Helpers
+	require := _require.New(t)
+	assert := _assert.New(t)
+
+	// Connect to database and get table object
 	ctx := context.Background()
 	dbURL := os.Getenv("DB_URL")
 	database, err := db.New(ctx, dbURL)
-	require.NoError(t, err)
-
+	require.NoError(err)
 	table := New(database)
-	authors, err := table.GetAll(ctx)
-	require.NoError(t, err)
 
-	assert.Equal(t, 41, len(authors), "number of results")
+	// Execute query
+	authors, err := table.GetAll(ctx)
+	require.NoError(err)
+
+	assert.Equal(41, len(authors), "number of results")
 
 	first := authors[0]
 	second := authors[1]
 	last := authors[len(authors)-1]
-	assert.Equal(t, "Abraham", first.FirstName, "firstly sorting by first name: Abraham comes first")
-	assert.Equal(t, "Amelia", second.FirstName, "firstly sorting by first name: Amelia comes second")
-	assert.Equal(t, "Wendell", last.FirstName, "firstly sorting by first name: Wendell comes last")
+	assert.Equal("Abraham", first.FirstName, "firstly sorting by first name: Abraham comes first")
+	assert.Equal("Amelia", second.FirstName, "firstly sorting by first name: Amelia comes second")
+	assert.Equal("Wendell", last.FirstName, "firstly sorting by first name: Wendell comes last")
 
 	robertMilofskyIndex := getAuthorIndexByID(authors, 38)
 	robertPlimptonIndex := getAuthorIndexByID(authors, 37)
-	assert.Less(t, robertMilofskyIndex, robertPlimptonIndex, "secondly sorting by last name: Robert Milofsky comes before Robert Plimpton")
+	assert.Less(robertMilofskyIndex, robertPlimptonIndex, "secondly sorting by last name: Robert Milofsky comes before Robert Plimpton")
 }
 
 func getAuthorIndexByID(authors []Author, id int) int {

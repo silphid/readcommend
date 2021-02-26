@@ -44,12 +44,16 @@ type Criteria struct {
 }
 
 // GetRecommendations retrieves books from book table, ordered from best to worst
-// rating and filtered by multiple optional criteria. Specifying an empty
-// slice of authorIDs or genreIDs means those criteria will not be applied,
-// whereas specifying multiple IDs means the union of results will be
-// returned. For page, year and limit criteria, specifying a nil pointer
-// will ignore the criteria.
+// rating and filtered by multiple optional criteria.
+//
+// - Specifying an empty slice of authors or genres (or a nil pointer for pages, year,
+//   limit) ignores those criteria.
+// - Specifying multiple authors returns the union of their books (and same goes for
+//   genres).
+// - Specifying different criteria returns their intersection.
+//
 func (a BookTable) GetRecommendations(ctx context.Context, criteria Criteria) ([]Book, error) {
+	// Base query
 	builder := sq.StatementBuilder.PlaceholderFormat(sq.Dollar).
 		Select("b.id", "b.title", "b.year_published", "b.rating", "b.pages",
 			"b.genre_id", "g.title", "b.author_id", "a.first_name", "a.last_name").
@@ -65,18 +69,18 @@ func (a BookTable) GetRecommendations(ctx context.Context, criteria Criteria) ([
 
 	// Number of pages
 	if cr.minPages != nil {
-		builder = builder.Where("pages > ?", *cr.minPages)
+		builder = builder.Where("pages >= ?", *cr.minPages)
 	}
 	if cr.maxPages != nil {
-		builder = builder.Where("pages < ?", *cr.maxPages)
+		builder = builder.Where("pages <= ?", *cr.maxPages)
 	}
 
 	// Year published
 	if cr.minYear != nil {
-		builder = builder.Where("year_published > ?", *cr.minYear)
+		builder = builder.Where("year_published >= ?", *cr.minYear)
 	}
 	if cr.maxYear != nil {
-		builder = builder.Where("year_published < ?", *cr.maxYear)
+		builder = builder.Where("year_published <= ?", *cr.maxYear)
 	}
 
 	// Limit
@@ -129,7 +133,7 @@ func whereColumnInIDs(builder sq.SelectBuilder, column string, ids []int) sq.Sel
 		return builder
 	}
 
-	// Convert []int to []interface{}
+	// Convert `[]int` to `[]interface{}`
 	args := make([]interface{}, len(ids))
 	for i, id := range ids {
 		args[i] = id
