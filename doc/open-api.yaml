@@ -93,24 +93,33 @@ paths:
                 yearPublished: 1972
                 rating: 1.62
                 pages: 169
-                genreID: 8
-                genreTitle: Childrens
-                authorID: 6
-                authorName: Bernard Hopf
+                genre:
+                  id: 8
+                  title: Childrens
+                author:
+                  id: 6
+                  firstName: Bernard
+                  lastName: Hopf
               - id: 2
                 title: Adventures of Kaya
                 yearPublished: 1999
                 rating: 2.13
                 pages: 619
-                genreID: 1
-                genreTitle: Young Adult
-                authorID: 40
-                authorName: Ward Haigh
+                genre:
+                  id: 1
+                  title: Young Adult
+                author:
+                  id: 40
+                  firstName: Ward
+                  lastName: Haigh
         400:
-          description: Invalid query parameters
+          description: |
+            Bad Request, most likely because of invalid query parameters
           application/json:
             schema:
               type: object
+            example:
+              message: invalid query parameters
   /authors:
     get:
       summary: Gets all authors
@@ -203,3 +212,30 @@ paths:
               - id: 2
                 title: Modern
                 minYear: 1970
+  /health:
+    get:
+      summary: Checks whether service and database are responsive.
+      description: |
+        Checks health of service, mostly that it's able to response to
+        incoming requests and that the underlying database is reachable.
+      operationId: GetHealth
+      responses:
+        200:
+          description: |
+            The service and underlying database are generally responsive,
+            however it doesn't guarantee perfect internal state, nor
+            capacity to serve current load in reasonable delays.
+          application/json:
+            schema:
+              type: object
+            example:
+              message: healthy
+        503:
+          description: |
+            Service Unavailable, most likely because database is unreachable
+            or unresponsive.
+          application/json:
+            schema:
+              type: object
+            example:
+              message: database connection failed

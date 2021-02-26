@@ -1,10 +1,12 @@
 INSERT INTO era (id, title, min_year, max_year)
 VALUES
+  (0, 'Any', NULL, NULL),
   (1, 'Classic', NULL, 1969),
   (2, 'Modern', 1970, NULL);
 
 INSERT INTO size (id, title, min_pages, max_pages)
 VALUES
+  (0, 'Any', NULL, NULL),
   (1, 'Short story – up to 35 pages', NULL, 34),
   (2, 'Novelette – 35 to 85 pages', 35, 84),
   (3, 'Novella – 85 to 200 pages', 85, 199),
@@ -25,7 +27,7 @@ VALUES
 
 INSERT INTO author (id, first_name, last_name)
 VALUES
-  (1, 'Abraham', 'Stackhouse'),
+  (1, 'Wendell', 'Stackhouse'),
   (2, 'Amelia', 'Wangerin, Jr.'),
   (3, 'Anastasia', 'Inez'),
   (4, 'Arthur', 'McCrumb'),
@@ -61,11 +63,11 @@ VALUES
   (34, 'Philip', 'Antrim'),
   (35, 'Phoebe', 'Brown'),
   (36, 'R.M.', 'Larner'),
-  (37, 'Robert', 'Milofsky'),
-  (38, 'Robert', 'Plimpton'),
+  (37, 'Robert', 'Plimpton'),
+  (38, 'Robert', 'Milofsky'),
   (39, 'Ursula', 'Karénine'),
   (40, 'Ward', 'Haigh'),
-  (41, 'Wendell', 'Barton');
+  (41, 'Abraham', 'Barton');
 
 INSERT INTO book (id, title, year_published, rating, pages, genre_id, author_id)
 VALUES
