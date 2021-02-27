@@ -1,4 +1,4 @@
-package eratbl
+package era
 
 import (
 	"context"
@@ -8,9 +8,9 @@ import (
 	"github.com/silphid/readcommend/src/server/internal/db"
 )
 
-// EraTable represents the `era` database table, along with all
+// Table represents the `era` database table, along with all
 // operations that can be performed against it
-type EraTable struct {
+type Table struct {
 	queryer db.Queryer
 }
 
@@ -22,13 +22,13 @@ type Era struct {
 	MaxYear *int   `json:"max_year"`
 }
 
-// New creates a new EraTable object using given queryer to access database
-func New(queryer db.Queryer) EraTable {
-	return EraTable{queryer: queryer}
+// NewTable creates a new Table object using given queryer to access database
+func NewTable(queryer db.Queryer) Table {
+	return Table{queryer: queryer}
 }
 
 // GetAll retrieves all eras from era table, ordered by ID
-func (a EraTable) GetAll(ctx context.Context) ([]Era, error) {
+func (a Table) GetAll(ctx context.Context) ([]Era, error) {
 	// Building query
 	builder := squirrel.StatementBuilder.PlaceholderFormat(squirrel.Dollar)
 	query, args, err := builder.

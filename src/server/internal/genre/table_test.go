@@ -1,4 +1,4 @@
-package genretbl
+package genre
 
 import (
 	"context"

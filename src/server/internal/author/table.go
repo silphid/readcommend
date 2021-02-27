@@ -1,4 +1,4 @@
-package authortbl
+package author
 
 import (
 	"context"
@@ -8,9 +8,9 @@ import (
 	"github.com/silphid/readcommend/src/server/internal/db"
 )
 
-// AuthorTable represents the `author` database table, along with all
+// Table represents the `author` database table, along with all
 // operations that can be performed against it
-type AuthorTable struct {
+type Table struct {
 	queryer db.Queryer
 }
 
@@ -21,13 +21,13 @@ type Author struct {
 	LastName  string `json:"lastName"`
 }
 
-// New creates a new AuthorTable object using given queryer to access database
-func New(queryer db.Queryer) AuthorTable {
-	return AuthorTable{queryer: queryer}
+// NewTable creates a new Table object using given queryer to access database
+func NewTable(queryer db.Queryer) Table {
+	return Table{queryer: queryer}
 }
 
 // GetAll retrieves all authors from author table, ordered by first then last name
-func (a AuthorTable) GetAll(ctx context.Context) ([]Author, error) {
+func (a Table) GetAll(ctx context.Context) ([]Author, error) {
 	// Building query
 	builder := squirrel.StatementBuilder.PlaceholderFormat(squirrel.Dollar)
 	query, args, err := builder.

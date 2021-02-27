@@ -1,4 +1,4 @@
-package booktbl
+package book
 
 import (
 	"context"
@@ -6,9 +6,9 @@ import (
 	"testing"
 
 	"github.com/go-test/deep"
+	"github.com/silphid/readcommend/src/server/internal/author"
 	"github.com/silphid/readcommend/src/server/internal/db"
-	"github.com/silphid/readcommend/src/server/internal/db/authortbl"
-	"github.com/silphid/readcommend/src/server/internal/db/genretbl"
+	"github.com/silphid/readcommend/src/server/internal/genre"
 	_assert "github.com/stretchr/testify/assert"
 	_require "github.com/stretchr/testify/require"
 )
@@ -162,11 +162,11 @@ var testCases = []testCase{
 				YearPublished: 1985,
 				Rating:        4.54,
 				Pages:         331,
-				Genre: genretbl.Genre{
+				Genre: genre.Genre{
 					ID:    7,
 					Title: "Fiction",
 				},
-				Author: authortbl.Author{
+				Author: author.Author{
 					ID:        26,
 					FirstName: "Kris",
 					LastName:  "Elegant",
@@ -178,11 +178,11 @@ var testCases = []testCase{
 				YearPublished: 1976,
 				Rating:        1.14,
 				Pages:         258,
-				Genre: genretbl.Genre{
+				Genre: genre.Genre{
 					ID:    7,
 					Title: "Fiction",
 				},
-				Author: authortbl.Author{
+				Author: author.Author{
 					ID:        25,
 					FirstName: "Kenneth",
 					LastName:  "Douglas",
@@ -201,7 +201,7 @@ func TestGetRecommendations(t *testing.T) {
 	dbURL := os.Getenv("DB_URL")
 	database, err := db.New(ctx, dbURL)
 	require.NoError(err)
-	table := New(database)
+	table := NewTable(database)
 
 	// Run all sub-tests
 	for _, tc := range testCases {

@@ -1,4 +1,4 @@
-package sizetbl
+package size
 
 import (
 	"context"
@@ -8,9 +8,9 @@ import (
 	"github.com/silphid/readcommend/src/server/internal/db"
 )
 
-// SizeTable represents the `size` database table, along with all
+// Table represents the `size` database table, along with all
 // operations that can be performed against it
-type SizeTable struct {
+type Table struct {
 	queryer db.Queryer
 }
 
@@ -22,13 +22,13 @@ type Size struct {
 	MaxPages *int   `json:"max_pages"`
 }
 
-// New creates a new SizeTable object using given queryer to access database
-func New(queryer db.Queryer) SizeTable {
-	return SizeTable{queryer: queryer}
+// NewTable creates a new Table object using given queryer to access database
+func NewTable(queryer db.Queryer) Table {
+	return Table{queryer: queryer}
 }
 
 // GetAll retrieves all sizes from size table, ordered by ID
-func (a SizeTable) GetAll(ctx context.Context) ([]Size, error) {
+func (a Table) GetAll(ctx context.Context) ([]Size, error) {
 	// Building query
 	builder := squirrel.StatementBuilder.PlaceholderFormat(squirrel.Dollar)
 	query, args, err := builder.

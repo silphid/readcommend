@@ -1,35 +1,35 @@
-package booktbl
+package book
 
 import (
 	"context"
 	"fmt"
 
 	sq "github.com/Masterminds/squirrel"
+	"github.com/silphid/readcommend/src/server/internal/author"
 	"github.com/silphid/readcommend/src/server/internal/db"
-	"github.com/silphid/readcommend/src/server/internal/db/authortbl"
-	"github.com/silphid/readcommend/src/server/internal/db/genretbl"
+	"github.com/silphid/readcommend/src/server/internal/genre"
 )
 
-// BookTable represents the `book` database table, along with all
+// Table represents the `book` database table, along with all
 // operations that can be performed against it
-type BookTable struct {
+type Table struct {
 	queryer db.Queryer
 }
 
 // Book represents the information about one book
 type Book struct {
-	ID            int              `json:"id"`
-	Title         string           `json:"title"`
-	YearPublished int              `json:"yearPublished"`
-	Rating        float32          `json:"rating"`
-	Pages         int              `json:"pages"`
-	Genre         genretbl.Genre   `json:"genre"`
-	Author        authortbl.Author `json:"author"`
+	ID            int           `json:"id"`
+	Title         string        `json:"title"`
+	YearPublished int           `json:"yearPublished"`
+	Rating        float32       `json:"rating"`
+	Pages         int           `json:"pages"`
+	Genre         genre.Genre   `json:"genre"`
+	Author        author.Author `json:"author"`
 }
 
-// New creates a new BookTable object using given queryer to access database
-func New(queryer db.Queryer) BookTable {
-	return BookTable{queryer: queryer}
+// NewTable creates a new Table object using given queryer to access database
+func NewTable(queryer db.Queryer) Table {
+	return Table{queryer: queryer}
 }
 
 // Criteria describes all possible criteria for querying book recommendations
@@ -52,7 +52,7 @@ type Criteria struct {
 //   genres).
 // - Specifying different criteria returns their intersection.
 //
-func (a BookTable) GetRecommendations(ctx context.Context, criteria Criteria) ([]Book, error) {
+func (a Table) GetRecommendations(ctx context.Context, criteria Criteria) ([]Book, error) {
 	// Base query
 	builder := sq.StatementBuilder.PlaceholderFormat(sq.Dollar).
 		Select("b.id", "b.title", "b.year_published", "b.rating", "b.pages",
@@ -104,8 +104,8 @@ func (a BookTable) GetRecommendations(ctx context.Context, criteria Criteria) ([
 	books := []Book{}
 	for rows.Next() {
 		book := Book{
-			Genre:  genretbl.Genre{},
-			Author: authortbl.Author{},
+			Genre:  genre.Genre{},
+			Author: author.Author{},
 		}
 		if err := rows.Scan(
 			&book.ID,

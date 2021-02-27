@@ -1,4 +1,4 @@
-package eratbl
+package era
 
 import (
 	"context"
@@ -20,7 +20,7 @@ func TestGetAll(t *testing.T) {
 	dbURL := os.Getenv("DB_URL")
 	database, err := db.New(ctx, dbURL)
 	require.NoError(err)
-	table := New(database)
+	table := NewTable(database)
 
 	// Execute query
 	eras, err := table.GetAll(ctx)

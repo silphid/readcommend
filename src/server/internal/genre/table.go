@@ -1,4 +1,4 @@
-package genretbl
+package genre
 
 import (
 	"context"
@@ -8,9 +8,9 @@ import (
 	"github.com/silphid/readcommend/src/server/internal/db"
 )
 
-// GenreTable represents the `genre` database table, along with all
+// Table represents the `genre` database table, along with all
 // operations that can be performed against it
-type GenreTable struct {
+type Table struct {
 	queryer db.Queryer
 }
 
@@ -21,12 +21,12 @@ type Genre struct {
 }
 
 // New creates a new GenreTable object using given queryer to access database
-func New(queryer db.Queryer) GenreTable {
-	return GenreTable{queryer: queryer}
+func New(queryer db.Queryer) Table {
+	return Table{queryer: queryer}
 }
 
 // GetAll retrieves all genres from genre table, ordered by ID
-func (a GenreTable) GetAll(ctx context.Context) ([]Genre, error) {
+func (a Table) GetAll(ctx context.Context) ([]Genre, error) {
 	// Building query
 	builder := squirrel.StatementBuilder.PlaceholderFormat(squirrel.Dollar)
 	query, args, err := builder.
