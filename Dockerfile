@@ -1,6 +1,6 @@
 # --- App build-only stage ---
 
-FROM golang:1.14-buster as build
+FROM golang:1.16-buster as build
 
 # For much faster builds, download go modules first because that's the longest
 # part and we don't want to invalidate that work each time we change source files
