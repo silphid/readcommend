@@ -36,10 +36,10 @@ func NewTable(queryer db.Queryer) Table {
 type Criteria struct {
 	authorIDs []int
 	genreIDs  []int
-	minPages  *int
-	maxPages  *int
-	minYear   *int
-	maxYear   *int
+	minPages  *uint64
+	maxPages  *uint64
+	minYear   *uint64
+	maxYear   *uint64
 	limit     *uint64
 }
 

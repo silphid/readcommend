@@ -38,20 +38,20 @@ func New(ctx context.Context, dbURL string) (*DB, error) {
 }
 
 // Query executes given query against database and returns resulting rows.
-func (db *DB) Query(ctx context.Context, query string, args ...interface{}) (pgx.Rows, error) {
+func (db DB) Query(ctx context.Context, query string, args ...interface{}) (pgx.Rows, error) {
 	return db.pool.Query(ctx, query, args...)
 }
 
 // Close releases all resources related to database,
 // notably the connection pool.
-func (db *DB) Close() {
+func (db DB) Close() {
 	db.pool.Close()
 }
 
 // Check allows to make a very summary sanity check
 // with the database, to determine whether it's
 // reachable and responsive.
-func (db *DB) Check(ctx context.Context) error {
+func (db DB) Check(ctx context.Context) error {
 	_, err := db.pool.Exec(ctx, "select 1")
 	return err
 }

@@ -2,6 +2,7 @@ package main
 
 import (
 	"os"
+	"time"
 
 	"github.com/joho/godotenv"
 	"github.com/kelseyhightower/envconfig"
@@ -10,11 +11,12 @@ import (
 // Top-level configs, private because the whole struct should
 // not be passed down the call chain, only its individual values.
 type config struct {
-	Env      string
-	LogLevel string `envconfig:"LOG_LEVEL" default:"info"`
-	BaseURL  string `envconfig:"BASE_URL" default:"http://localhost:5000"`
-	Port     uint16 `envconfig:"PORT" default:"5000"`
-	DBUrl    string `envconfig:"DB_URL" default:"postgres://postgres:password123@localhost:5432/readcommend?sslmode=disable"`
+	Env         string
+	LogLevel    string        `envconfig:"LOG_LEVEL" default:"info"`
+	BaseURL     string        `envconfig:"BASE_URL" default:"http://localhost:5000"`
+	Port        uint16        `envconfig:"PORT" default:"5000"`
+	DBUrl       string        `envconfig:"DB_URL" default:"postgres://postgres:password123@localhost:5432/readcommend?sslmode=disable"`
+	GracePeriod time.Duration `envconfig:"GRACE_PERIOD" default:"10s"`
 }
 
 func getConfig() config {

@@ -1,4 +1,4 @@
-package author
+package size
 
 import (
 	"fmt"

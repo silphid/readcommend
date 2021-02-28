@@ -20,8 +20,8 @@ type Genre struct {
 	Title string `json:"title"`
 }
 
-// New creates a new GenreTable object using given queryer to access database
-func New(queryer db.Queryer) Table {
+// NewTable creates a new GenreTable object using given queryer to access database
+func NewTable(queryer db.Queryer) Table {
 	return Table{queryer: queryer}
 }
 
