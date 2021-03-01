@@ -1,0 +1,21 @@
+version: "3"
+services:
+  app:
+    environment:
+      - DB_URL=postgres://postgres:password123@db:5432/readcommend?sslmode=disable
+      - DB_HOST_PORT=db:5432
+      - PORT=5000
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    ports:
+      - 5000:5000
+  db:
+    image: "bitnami/postgresql:latest"
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRESQL_PASSWORD=password123
+      - POSTGRESQL_DATABASE=readcommend
