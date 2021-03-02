@@ -2,29 +2,20 @@ import React  from "react";
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import { useState, useEffect } from "react";
+import * as models from "./models";
 
-type Error = {
-  message: string,
-}
-
-type Author = {
-  id: number,
-  firstName: number,
-  lastName: number,
-}
-
-export default function Authors() {
-  const [error, setError] = React.useState<Error | null>(null);
+export default function Genres(props: { onChange: (genre: models.Genre[]) => void }) {
+  const [error, setError] = React.useState<models.Error | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [authors, setAuthors] = React.useState<Author[]>([]);
+  const [genres, setGenres] = React.useState<models.Genre[]>([]);
 
   useEffect(() => {
-    fetch("/api/v1/authors")
+    fetch("/api/v1/genres")
       .then(res => res.json())
       .then(
         (result) => {
           setIsLoaded(true);
-          setAuthors(result);
+          setGenres(result);
         },
         (error) => {
           setIsLoaded(true);
@@ -41,14 +32,15 @@ export default function Authors() {
     return (
       <Autocomplete
       multiple
-      options={authors!}
-      getOptionLabel={(option) => `${option.firstName} ${option.lastName}`}
+      options={genres!}
+      getOptionLabel={(x) => x.title}
+      onChange={(_, items) => props.onChange(items)}
       renderInput={(params) => (
         <TextField
           {...params}
           variant="standard"
-          label="Authors"
-          placeholder="Type author name(s)"
+          label="Genres"
+          placeholder="Type or select genre(s)"
         />
       )}
     />
