@@ -1,10 +1,11 @@
-import React  from "react";
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import TextField from '@material-ui/core/TextField';
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import TextField from "@material-ui/core/TextField";
 import * as models from "./models";
 
-export default function Authors(props: { onChange: (authors: models.Author[]) => void }) {
+export default function Authors(props: {
+  onChange: (authors: models.Author[]) => void;
+}) {
   const [error, setError] = React.useState<models.Error | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [authors, setAuthors] = React.useState<models.Author[]>([]);
@@ -13,29 +14,32 @@ export default function Authors(props: { onChange: (authors: models.Author[]) =>
     fetch("/api/v1/authors")
       .then(res => res.json())
       .then(
-        (result) => {
+        result => {
           setIsLoaded(true);
           setAuthors(result);
         },
-        (error) => {
+        error => {
           setIsLoaded(true);
           setError(error);
         }
-      )
-  }, [])
+      );
+  }, []);
 
   if (error) {
     return <div>Error: {error.message}</div>;
-  } else if (!isLoaded) {
+  }
+
+  if (!isLoaded) {
     return <div>Loading...</div>;
-  } else {
-    return (
-      <Autocomplete
+  }
+
+  return (
+    <Autocomplete
       multiple
-      options={authors!}
-      getOptionLabel={(x) => `${x.firstName} ${x.lastName}`}
+      options={authors}
+      getOptionLabel={x => `${x.firstName} ${x.lastName}`}
       onChange={(_, items) => props.onChange(items)}
-      renderInput={(params) => (
+      renderInput={params => (
         <TextField
           {...params}
           variant="standard"
@@ -44,6 +48,5 @@ export default function Authors(props: { onChange: (authors: models.Author[]) =>
         />
       )}
     />
-    );
-  }
+  );
 }

@@ -1,41 +1,62 @@
-import { Box, Grid } from "@material-ui/core";
-import React  from "react";
+import { FormControl, Grid, InputLabel } from "@material-ui/core";
+import React, { useState, useEffect } from "react";
 import Authors from "./Authors";
-import Eras from "./Eras";
 import Genres from "./Genres";
+import Eras from "./Eras";
+import Sizes from "./Sizes";
+import Limit from "./Limit";
 import * as models from "./models";
 
-export default function Criteria (props: { onChange: (criteria: models.Criteria) => void }) {
-  const [authors, setAuthors] = React.useState<models.Author[]>([]);
-  const [genres, setGenres] = React.useState<models.Genre[]>([]);
-  const [size, setSize] = React.useState<models.Size>(models.DefaultSize);
-  const [era, setEra] = React.useState<models.Era>(models.DefaultEra);
-  const [limit, setLimit] = React.useState<number>(10);
+export default function Criteria(props: {
+  onChange: (criteria: models.Criteria) => void;
+}) {
+  const [authors, setAuthors] = useState<models.Author[]>([]);
+  const [genres, setGenres] = useState<models.Genre[]>([]);
+  const [size, setSize] = useState<models.Size>(models.DefaultSize);
+  const [era, setEra] = useState<models.Era>(models.DefaultEra);
+  const [limit, setLimit] = useState<number>(10);
 
-  function onChange() {
+  useEffect(() => {
     props.onChange({
       authors: authors.map(x => x.id),
       genres: genres.map(x => x.id),
       minYear: era.minYear,
       maxYear: era.maxYear,
-      minPages: size.minPages, 
-      maxPages: size.maxPages, 
+      minPages: size.minPages,
+      maxPages: size.maxPages,
       limit: limit,
     });
-  }
+  }, [authors, genres, size, era, limit]);
 
-  return <Box>
-    <h1>Criteria</h1>
-    <Authors onChange={(x) => { setAuthors(x); onChange(); }}/>
-    <Genres onChange={(x) => { setGenres(x); onChange(); }}/>
+  return (
     <Grid container spacing={2}>
-      <Grid item xs={4}>
-        <Eras onChange={(x) => { setEra(x); onChange(); }}/>
+      <Grid item xs={12}>
+        <h1>Criteria</h1>
+      </Grid>
+      <Grid item xs={12}>
+        <Authors onChange={x => setAuthors(x)} />
+      </Grid>
+      <Grid item xs={12}>
+        <Genres onChange={x => setGenres(x)} />
       </Grid>
       <Grid item xs={4}>
+        <FormControl fullWidth={true}>
+          <InputLabel>Era</InputLabel>
+          <Eras onChange={x => setEra(x)} />
+        </FormControl>
       </Grid>
       <Grid item xs={4}>
+        <FormControl fullWidth={true}>
+          <InputLabel>Pages</InputLabel>
+          <Sizes onChange={x => setSize(x)} />
+        </FormControl>
+      </Grid>
+      <Grid item xs={4}>
+        <FormControl fullWidth={true}>
+          <InputLabel>Max results</InputLabel>
+          <Limit onChange={x => setLimit(x)} />
+        </FormControl>
       </Grid>
     </Grid>
-  </Box>;
-};
+  );
+}

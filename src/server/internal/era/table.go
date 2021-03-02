@@ -18,8 +18,8 @@ type Table struct {
 type Era struct {
 	ID      int    `json:"id"`
 	Title   string `json:"title"`
-	MinYear *int   `json:"min_year"`
-	MaxYear *int   `json:"max_year"`
+	MinYear *int   `json:"minYear"`
+	MaxYear *int   `json:"maxYear"`
 }
 
 // NewTable creates a new Table object using given queryer to access database

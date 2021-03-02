@@ -18,8 +18,8 @@ type Table struct {
 type Size struct {
 	ID       int    `json:"id"`
 	Title    string `json:"title"`
-	MinPages *int   `json:"min_pages"`
-	MaxPages *int   `json:"max_pages"`
+	MinPages *int   `json:"minPages"`
+	MaxPages *int   `json:"maxPages"`
 }
 
 // NewTable creates a new Table object using given queryer to access database

@@ -2,18 +2,20 @@ import React, { useState, useEffect } from "react";
 import * as models from "./models";
 import { MenuItem, Select } from "@material-ui/core";
 
-export default function Eras(props: { onChange: (era: models.Era) => void }) {
+export default function Sizes(props: {
+  onChange: (size: models.Size) => void;
+}) {
   const [error, setError] = useState<models.Error | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [eras, setEras] = useState<models.Era[]>([]);
+  const [sizes, setSizes] = useState<models.Size[]>([]);
 
   useEffect(() => {
-    fetch("/api/v1/eras")
+    fetch("/api/v1/sizes")
       .then(res => res.json())
       .then(
         result => {
           setIsLoaded(true);
-          setEras(result);
+          setSizes(result);
         },
         error => {
           setIsLoaded(true);
@@ -32,11 +34,11 @@ export default function Eras(props: { onChange: (era: models.Era) => void }) {
 
   return (
     <Select
-      onChange={e => props.onChange(eras[Number(e.target.value)])}
+      onChange={e => props.onChange(sizes[Number(e.target.value)])}
       fullWidth={true}
       defaultValue={0}
     >
-      {eras.map((x, i) => (
+      {sizes.map((x, i) => (
         <MenuItem key={x.id} value={i}>
           {x.title}
         </MenuItem>
