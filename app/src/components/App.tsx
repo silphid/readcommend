@@ -3,7 +3,6 @@ import Criteria from "./criteria/Criteria";
 import Results from "./Results";
 import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
-import AppBar from "@material-ui/core/AppBar";
 import * as models from "./criteria/models";
 
 const App: React.FC = () => {
@@ -14,17 +13,6 @@ const App: React.FC = () => {
   return (
     <Container maxWidth="md">
       <Box my={4}>
-        <AppBar color="primary" position="static">
-          <h1
-            style={{
-              paddingLeft: "30px",
-              fontFamily: "Caveat",
-              fontSize: "60pt",
-            }}
-          >
-            Readcommend
-          </h1>
-        </AppBar>
         <Criteria onChange={x => setCriteria(x)} />
         <Results />
         <p>Authors: {criteria.authors.join(" ")}</p>

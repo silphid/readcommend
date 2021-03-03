@@ -29,10 +29,7 @@ export default function Criteria(props: {
   }, [authors, genres, size, era, limit]);
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={12}>
-        <h1>Criteria</h1>
-      </Grid>
+    <Grid container spacing={2} style={{ background: "#F0F0F0" }}>
       <Grid item xs={12}>
         <Authors onChange={x => setAuthors(x)} />
       </Grid>
