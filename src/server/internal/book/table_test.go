@@ -24,12 +24,6 @@ type testCase struct {
 	expectedBooks   *[]Book
 }
 
-// pInt is a helper to convert an `int` literal into a `*int`.
-// This is necessary because we use `*int` as nullable search criteria.
-func pInt(value int) *int {
-	return &value
-}
-
 // pInt is a helper to convert an `uint64` literal into a `*uint64`.
 // This is necessary because we use `*uint64` as nullable limit criteria.
 func pUint64(value uint64) *uint64 {
@@ -85,14 +79,14 @@ var testCases = []testCase{
 	{
 		name: "min pages",
 		criteria: Criteria{
-			minPages: pInt(867),
+			minPages: pUint64(867),
 		},
 		expectedBookIDs: &[]int{31, 56, 17},
 	},
 	{
 		name: "max pages",
 		criteria: Criteria{
-			maxPages: pInt(16),
+			maxPages: pUint64(16),
 		},
 		expectedBookIDs: &[]int{18, 38, 54},
 	},
@@ -100,7 +94,7 @@ var testCases = []testCase{
 		name: "min pages is inclusive",
 		criteria: Criteria{
 			authorIDs: []int{10},
-			minPages:  pInt(731),
+			minPages:  pUint64(731),
 		},
 		expectedBookIDs: &[]int{46},
 	},
@@ -108,21 +102,21 @@ var testCases = []testCase{
 		name: "max pages is inclusive",
 		criteria: Criteria{
 			authorIDs: []int{10},
-			maxPages:  pInt(449),
+			maxPages:  pUint64(449),
 		},
 		expectedBookIDs: &[]int{32},
 	},
 	{
 		name: "min year",
 		criteria: Criteria{
-			minYear: pInt(2020),
+			minYear: pUint64(2020),
 		},
 		expectedBookIDs: &[]int{27, 34},
 	},
 	{
 		name: "max year",
 		criteria: Criteria{
-			maxYear: pInt(1931),
+			maxYear: pUint64(1931),
 		},
 		expectedBookIDs: &[]int{15, 36},
 	},
@@ -130,7 +124,7 @@ var testCases = []testCase{
 		name: "min year is inclusive",
 		criteria: Criteria{
 			authorIDs: []int{10},
-			minYear:   pInt(2004),
+			minYear:   pUint64(2004),
 		},
 		expectedBookIDs: &[]int{46},
 	},
@@ -138,7 +132,7 @@ var testCases = []testCase{
 		name: "max year is inclusive",
 		criteria: Criteria{
 			authorIDs: []int{10},
-			maxYear:   pInt(1935),
+			maxYear:   pUint64(1935),
 		},
 		expectedBookIDs: &[]int{32},
 	},
