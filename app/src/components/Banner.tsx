@@ -1,6 +1,6 @@
-import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
 import image from "../images/banner.jpg";
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
   fullWidthImage: {
@@ -49,7 +49,7 @@ export default function Banner() {
         <div className={classes.titleBox}>
           <h1 className={classes.titleText}>Readcommend</h1>
           <h2 className={classes.subtitleText}>
-            Book recommendations better than from a true friend
+            Book recommendations better than from your best friend
           </h2>
         </div>
       </div>

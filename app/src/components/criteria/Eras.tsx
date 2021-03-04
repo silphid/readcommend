@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import * as models from "./models";
+import * as models from "../../models";
 import { MenuItem, Select } from "@material-ui/core";
 
 export default function Eras(props: { onChange: (era: models.Era) => void }) {

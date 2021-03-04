@@ -1,11 +1,12 @@
 import React from "react";
 import Criteria from "./criteria/Criteria";
-import Results from "./Results";
+import Results from "./results/Results";
 import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
-import * as models from "./criteria/models";
+import * as models from "../models";
+import Copyright from "./Copyright";
 
-const App: React.FC = () => {
+export default function App() {
   const [criteria, setCriteria] = React.useState<models.Criteria>(
     models.DefaultCriteria
   );
@@ -14,19 +15,9 @@ const App: React.FC = () => {
     <Container maxWidth="md">
       <Box my={4}>
         <Criteria onChange={x => setCriteria(x)} />
-        <Results />
-        <p>Authors: {criteria.authors.join(" ")}</p>
-        <p>Genres: {criteria.genres.join(" ")}</p>
-        <p>
-          Era minYear: {criteria.minYear} maxYear: {criteria.maxYear}
-        </p>
-        <p>
-          Size minPages: {criteria.minPages} maxPages: {criteria.maxPages}
-        </p>
-        <p>Limit {criteria.limit}</p>
+        <Results criteria={criteria} />
+        <Copyright />
       </Box>
     </Container>
   );
-};
-
-export default App;
+}

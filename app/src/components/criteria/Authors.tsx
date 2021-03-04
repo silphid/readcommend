@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import TextField from "@material-ui/core/TextField";
-import * as models from "./models";
+import * as models from "../../models";
 
 export default function Authors(props: {
   onChange: (authors: models.Author[]) => void;

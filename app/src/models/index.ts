@@ -4,3 +4,4 @@ export * from "./Era";
 export * from "./Error";
 export * from "./Genre";
 export * from "./Size";
+export * from "./Book";

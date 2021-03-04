@@ -18,5 +18,5 @@ func setupRoutes(root *echo.Group, db db.DB) {
 	genre.SetupRoutes(v1, genre.NewAPI(genre.NewService(genre.NewTable(db))))
 	size.SetupRoutes(v1, size.NewAPI(size.NewService(size.NewTable(db))))
 
-	root.Static("/app", "app/dist")
+	root.Static("/", "app/dist")
 }

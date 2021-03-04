@@ -11,4 +11,5 @@ export type Criteria = {
 export const DefaultCriteria: Criteria = {
   authors: [],
   genres: [],
+  limit: 10,
 };

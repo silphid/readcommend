@@ -5,11 +5,23 @@ import Genres from "./Genres";
 import Eras from "./Eras";
 import Sizes from "./Sizes";
 import Limit from "./Limit";
-import * as models from "./models";
+import * as models from "../../models";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles(theme => ({
+  criteriaBox: {
+    background: "#f4ebd9",
+    marginBottom: "24px",
+    width: "100%",
+    marginLeft: "0px",
+    marginRight: "0px",
+  },
+}));
 
 export default function Criteria(props: {
   onChange: (criteria: models.Criteria) => void;
 }) {
+  const classes = useStyles();
   const [authors, setAuthors] = useState<models.Author[]>([]);
   const [genres, setGenres] = useState<models.Genre[]>([]);
   const [size, setSize] = useState<models.Size>(models.DefaultSize);
@@ -29,7 +41,7 @@ export default function Criteria(props: {
   }, [authors, genres, size, era, limit]);
 
   return (
-    <Grid container spacing={2} style={{ background: "#F0F0F0" }}>
+    <Grid container spacing={2} className={classes.criteriaBox}>
       <Grid item xs={12}>
         <Authors onChange={x => setAuthors(x)} />
       </Grid>
