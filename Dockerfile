@@ -16,7 +16,7 @@ RUN go build -o bin/migrate ./src/migrations
 
 # --- Build node app ---
 
-FROM node:14 as build-node
+FROM node:10.18.1 as build-node
 
 # For much faster builds, install node packages first because that's the longest
 # part and we don't want to invalidate that work each time we change source files
