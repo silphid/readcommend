@@ -34,7 +34,7 @@ Then point your browser to: http://localhost:5000
 
 # Initial requirements
 
-- Write a REST endpoints that interacts with a collection of books from a data source containing the following properties:
+- Write a REST endpoint that interacts with a collection of books from a data source containing the following properties:
   - Author
   - Genre
   - Number of pages
