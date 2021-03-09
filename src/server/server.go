@@ -3,7 +3,8 @@ package main
 import (
 	"context"
 	"fmt"
-	"net/http"
+	"log"
+	"time"
 
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
@@ -12,17 +13,11 @@ import (
 
 // server represents an echo server that is ready to be started
 type server struct {
-	echo         *echo.Echo
-	cfg          config
-	shutdownChan <-chan struct{}
+	echo *echo.Echo
 }
 
 // newServer creates an echo server that is ready to be started
-func newServer(
-	cfg config,
-	db db.DB,
-	shutdownChan <-chan struct{},
-) (*server, error) {
+func newServer(db db.DB) (*server, error) {
 	// Create echo server with graceful shutdown handler
 	e := echo.New()
 	e.Server.RegisterOnShutdown(func() {
@@ -39,25 +34,21 @@ func newServer(
 	root := e.Group("")
 	setupRoutes(root, db)
 
-	return &server{echo: e, cfg: cfg, shutdownChan: shutdownChan}, nil
+	return &server{e}, nil
 }
 
 // Start kicks off echo server and handles graceful shutdown triggered by channel
-func (s *server) Start() error {
-	// Start server
+func (s *server) Start(port uint16) {
 	go func() {
-		if err := s.echo.Start(fmt.Sprintf(":%d", s.cfg.Port)); err != nil && err != http.ErrServerClosed {
-			s.echo.Logger.Fatalf("failed to start server: %v", err)
+		if err := s.echo.Start(fmt.Sprintf(":%d", port)); err != nil {
+			log.Printf("server exited with error: %v", err)
 		}
 	}()
+}
 
-	// Wait for shutdown event to gracefully shutdown server, with a timeout after grace period
-	<-s.shutdownChan
-	s.echo.Logger.Infof("trying to gracefully shut server down within %s", s.cfg.GracePeriod.String())
-	shutdownCtx, cancel := context.WithTimeout(context.Background(), s.cfg.GracePeriod)
+// Shutdown tries to stop the server gracefully with given grace period
+func (s *server) Shutdown(gracePeriod time.Duration) error {
+	ctx, cancel := context.WithTimeout(context.Background(), gracePeriod)
 	defer cancel()
-	if err := s.echo.Shutdown(shutdownCtx); err != nil {
-		s.echo.Logger.Fatalf("failed to gracefully shut server down: %v", err)
-	}
-	return nil
+	return s.echo.Shutdown(ctx)
 }
